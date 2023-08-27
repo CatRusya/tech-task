@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: "TechTask-2-create-city-table"
+      author: "Kateryna Siebova"
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: city
+      changes:
+        - createTable:
+            tableName: city
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: city_name
+                  type: character varying(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: country_id
+            baseTableName: city
+            constraintName: fk_city_country
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedTableName: country
+            referencedColumnNames: id
+

@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: "TechTask-7-fill-country-role-table"
+      author: "Kateryna Siebova"
+      changes:
+        - loadData:
+            file: "country.csv"
+            separator: ','
+            tableName: country

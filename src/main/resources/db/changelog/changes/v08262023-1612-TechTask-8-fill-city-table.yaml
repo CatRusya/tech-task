@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: "TechTask-8-fill-user-role-table"
+      author: "Kateryna Siebova"
+      changes:
+        - loadData:
+            file: "city.csv"
+            separator: ','
+            tableName: city
