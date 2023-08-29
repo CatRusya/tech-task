@@ -9,10 +9,12 @@ spring:
   application:
     name: techtask
   datasource:
-    url: jdbc:postgresql://${HOST}:5432/${POSTGRES_DATABASE}?currentSchema=${POSTGRES_SCHEMA}
+    url: jdbc:postgresql://${HOST:localhost}:5432/${POSTGRES_DATABASE}?currentSchema=${POSTGRES_SCHEMA}
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-Class-Name: org.postgresql.Driver
+    hikari:
+      leak-detection-threshold: 30000
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect

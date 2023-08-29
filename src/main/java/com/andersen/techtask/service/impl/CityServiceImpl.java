@@ -9,10 +9,14 @@ import com.andersen.techtask.repository.CityRepository;
 import com.andersen.techtask.service.CityService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,9 +26,17 @@ import java.util.Objects;
 public class CityServiceImpl implements CityService {
 
     private final CityRepository cityRepository;
-    private final CityMapper cityMapper;
 
     @Override
+    @Transactional(readOnly = true)
+    @Cacheable(value = "CityService::getById", key = "#id")
+    public City getCityById(Long id) {
+        return cityRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public CityResponse getAllCities(int page, int size, String cityName, String countryName) {
         Page<City> pageCities;
 
@@ -38,33 +50,19 @@ public class CityServiceImpl implements CityService {
 
         Page<CityDto> pageCityDtos = pageCities.map(this::cityToDto);
         return new CityResponse(PageRequest.of(page, size), pageCityDtos.getContent());
-//        if (countryName != null) {
-//            Page<City> pageCities = cityRepository.findCitiesByCountryName(countryName, PageRequest.of(page, size));
-//            Page<CityDto> pageCityDtos = pageCities.map(this::cityToDto);
-//            return new CityResponse(PageRequest.of(page, size), pageCityDtos.getContent());
-//        }
-//        if (cityName != null) {
-//            Page<City> pageCities = cityRepository.findAllByCityName(cityName, PageRequest.of(page, size));
-//            Page<CityDto> pageCityDtos = pageCities.map(this::cityToDto);
-//            return new CityResponse(PageRequest.of(page, size), pageCityDtos.getContent());
-//        }
-//
-//        Page<City> pageCities = cityRepository.findAll(PageRequest.of(page, size));
-//        Page<CityDto> pageCityDtos = pageCities.map(this::cityToDto);
-//        return new CityResponse(PageRequest.of(page, size), pageCityDtos.getContent());
     }
 
     @Override
+    @Transactional
+    @Caching(put = {
+            @CachePut(value = "CityService::getById", key = "#city.id"),
+    })
     public CityDto editCityName(Long id, CityDto dto) {
-        City city = cityRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException());
+        City city = getCityById(id);
         city.setCityName(dto.getCityName());
         cityRepository.save(city);
-        CityDto editCityName = new CityDto(city.getId(), city.getCityName(), city.getCountry().getCountryName(), city.getCountry().getLogo());
-        return editCityName;
+        return new CityDto(city.getId(), city.getCityName(), city.getCountry().getCountryName(), city.getCountry().getLogo());
     }
-
 
     private CityDto cityToDto(City city) {
         return new CityDto(

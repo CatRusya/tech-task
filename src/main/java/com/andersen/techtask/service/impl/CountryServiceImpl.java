@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class CountryServiceImpl implements CountryService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Page<CountryDto> getAllCountries(Pageable pageable) {
         Page<Country> pageCountries = countryRepository.findAll(pageable);
         return pageCountries.map(this::countryToDto);
@@ -32,5 +34,3 @@ public class CountryServiceImpl implements CountryService {
                 country.getCountryName());
     }
 }
-//    Page<CountryDto> pageCountryDtos = pageCountries.map(this::countryEntityToDto);
-//    List<CountryDto> countryDtos = pageCountryDtos.getContent();
