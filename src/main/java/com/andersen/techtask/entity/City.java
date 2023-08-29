@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 @Entity
@@ -29,4 +30,5 @@ public class City implements Serializable {
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     Country country;
+
 }

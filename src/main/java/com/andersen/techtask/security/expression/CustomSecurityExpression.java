@@ -13,9 +13,8 @@ import org.springframework.stereotype.Service;
 @Service("customSecurityExpression")
 @RequiredArgsConstructor
 public class CustomSecurityExpression {
-    private final UserService userService;
 
-    public boolean canAccessUser(final Long id) {
+    public boolean canAccessUser(Long id) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
 

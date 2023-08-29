@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Table(name = "country")
 @Entity(name = "country")
@@ -24,9 +25,12 @@ public class Country implements Serializable {
     @Column(name = "country_name")
     String countryName;
 
+    @Column(name = "logo")
+    @CollectionTable(name= "country_logo")
     String logo;
 
     @OneToMany(mappedBy = "country", cascade = {
             CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<City> cities;
+
 }

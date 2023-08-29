@@ -4,12 +4,15 @@ management:
       exposure:
         include: '*'
 spring:
+  config:
+    import: optional:file:.env[.properties]
   application:
     name: techtask
   datasource:
+    url: jdbc:postgresql://${HOST}:5432/${POSTGRES_DATABASE}?currentSchema=${POSTGRES_SCHEMA}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     driver-Class-Name: org.postgresql.Driver
-    hikari:
-      leak-detection-threshold: 30000
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -21,14 +24,27 @@ spring:
         format_sql: true
   liquibase:
     enabled: true
-
+  cache:
+    type: redis
+    cache-names: redis-cache
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: 6379
+      password: ${REDIS_PASSWORD}
 
 
 security:
   jwt:
-    secret: c2pkZmdranNscnRwZmdzZGtmZ2psc2tyanRbcGZnZGZrZ2xqZWxrcmpwb2dpcHNka2dhbHNramR0bGtqbGtqZ2xkZmdzcnRlcw==
-    access: 3600000
-    refresh: 2592000000
+    secret: ${JWT_SECRET}
+    access: 3600000     #1hour
+    refresh: 2592000000 #30days
 
 springdoc:
   override-with-generic-response: false
+
+minio:
+  bucket: images
+  url: http://localhost:9000
+  accessKey: minioadmin
+  secretKey: minioadmin

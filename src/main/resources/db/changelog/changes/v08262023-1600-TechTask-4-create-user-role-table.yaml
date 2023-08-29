@@ -24,17 +24,17 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
             primaryKey:
-                - columnNames:
-                    - users_id
-                    - role
+              - columnNames:
+                  - users_id
+                  - role
             foreignKeyConstraints:
-                  - foreignKeyConstraint:
-                      baseColumnNames: user_id
-                      baseTableName: users
-                      referencedColumnNames: id
-                      referencedTableName: users
-                      onDelete: cascade
-                      onUpdate: noAction
+              - foreignKeyConstraint:
+                  baseColumnNames: user_id
+                  baseTableName: users
+                  referencedColumnNames: id
+                  referencedTableName: users
+                  onDelete: cascade
+                  onUpdate: noAction
 
 
 

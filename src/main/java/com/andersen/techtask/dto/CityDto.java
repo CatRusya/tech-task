@@ -25,5 +25,9 @@ public class CityDto {
 
     @NotNull(message = "Country name must be not null", groups = {OnCreate.class, OnUpdate.class})
     @Length(max = 255, message = "Country name must be smaller than 255 symbols", groups = {OnCreate.class, OnUpdate.class})
-    Country country;
+    String countryName;
+
+    @Schema(example = "uuid-logo-name-with-extension.gif")
+    @Length(max = 255)
+    String logo;
 }

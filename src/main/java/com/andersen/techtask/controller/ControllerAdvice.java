@@ -1,9 +1,6 @@
 package com.andersen.techtask.controller;
 
-import com.andersen.techtask.exception.AccessDeniedException;
-import com.andersen.techtask.exception.ExceptionBody;
-import com.andersen.techtask.exception.ResourceMappingException;
-import com.andersen.techtask.exception.ResourceNotFoundException;
+import com.andersen.techtask.exception.*;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -80,11 +77,11 @@ public class ControllerAdvice {
         return new ExceptionBody("Authentication failed.");
     }
 
-//    @ExceptionHandler(ImageUploadException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ExceptionBody handleImageUpload(final ImageUploadException e) {
-//        return new ExceptionBody(e.getMessage());
-//    }
+    @ExceptionHandler(ImageUploadException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionBody handleImageUpload(final ImageUploadException e) {
+        return new ExceptionBody(e.getMessage());
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

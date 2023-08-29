@@ -32,4 +32,4 @@ databaseChangeLog:
                   name: password
                   type: character varying(255)
                   constraints:
-                   nullable: false
+                    nullable: false

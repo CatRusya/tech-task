@@ -2,6 +2,8 @@ package com.andersen.techtask.config;
 
 import com.andersen.techtask.security.JwtTokenFilter;
 import com.andersen.techtask.security.JwtTokenProvider;
+import com.andersen.techtask.service.props.MinioProperties;
+import io.minio.MinioClient;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -15,6 +17,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,11 +29,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class ApplicationConfig {
 
     private final ApplicationContext applicationContext;
     private final JwtTokenProvider tokenProvider;
+
+    private final MinioProperties minioProperties;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,6 +56,15 @@ public class ApplicationConfig {
 //                = new CustomSecurityExceptionHandler();
 //        expressionHandler.setApplicationContext(applicationContext);
 //        return expressionHandler;
+//    }
+
+//    @Bean
+//    public MinioClient minioClient(){
+//        return minioClient().builder()
+//                .endpoint(minioProperties.getUrl())
+//                .credentials(minioProperties.getAccessKey(), minioProperties.getSecretKey())
+//                .build();
+//
 //    }
 
     @Bean

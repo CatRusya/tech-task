@@ -5,16 +5,16 @@ import com.andersen.techtask.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,6 +36,16 @@ public class CountryController {
         return ResponseEntity.ok(countryService.getAllCountries(PageRequest.of(page, size)));
     }
 
+    @PostMapping("/{countryId}/load-logo")
+    @Operation(summary = "Upload logo for country")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
+    public ResponseEntity<CountryDto> loadLogo(
+            @PositiveOrZero @PathVariable Long countryId,
+            @RequestParam("flag_image") MultipartFile flagImage
+    ) {
+        //return new ResponseEntity<>(countryService.loadLogo(countryId, flagImage), HttpStatus.OK);
+        return null;
+    }
 
 
 

@@ -18,7 +18,6 @@ import java.util.List;
 public class CountryServiceImpl implements CountryService {
 
     private final CountryRepository countryRepository;
-    private final CountryMapper countryMapper;
 
 
     @Override
