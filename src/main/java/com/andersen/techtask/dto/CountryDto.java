@@ -28,4 +28,8 @@ public class CountryDto {
     @Length(max = 255, message = "Country name must be smaller than 255 symbols", groups = {OnCreate.class, OnUpdate.class})
     String name;
 
+    @Schema(example = "uuid-logo-name-with-extension.gif")
+    @Length(max = 255)
+    String logo;
+
 }

@@ -4,26 +4,32 @@ package com.andersen.techtask.service.impl;
 import com.andersen.techtask.dto.CityDto;
 import com.andersen.techtask.dto.response.CityResponse;
 import com.andersen.techtask.entity.City;
-import com.andersen.techtask.mappers.CityMapper;
 import com.andersen.techtask.repository.CityRepository;
 import com.andersen.techtask.service.CityService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
+
 
 @Service
 @RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
+
+    @Value("${minio.url}")
+    private String imageUrl;
+
+    @Value("${minio.bucket}")
+    private String imageBucket;
+
 
     private final CityRepository cityRepository;
 
@@ -32,7 +38,7 @@ public class CityServiceImpl implements CityService {
     @Cacheable(value = "CityService::getById", key = "#id")
     public City getCityById(Long id) {
         return cityRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("Cty not found"));
     }
 
     @Override
@@ -74,10 +80,9 @@ public class CityServiceImpl implements CityService {
 
 
     private String getFlagUrl(String flagPath) {
-        return null;
-//        if (Objects.isNull(flagPath))
-//            return null;
-//        return IMAGE_HOST + "/" + FLAGS_BUCKET + "/" + flagPath;
+        if (Objects.isNull(flagPath))
+            return null;
+        return imageUrl + "/" + imageBucket + "/" + flagPath;
     }
 
 }

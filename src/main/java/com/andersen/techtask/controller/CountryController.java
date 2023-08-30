@@ -1,6 +1,7 @@
 package com.andersen.techtask.controller;
 
 import com.andersen.techtask.dto.CountryDto;
+import com.andersen.techtask.entity.Country;
 import com.andersen.techtask.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,15 +37,14 @@ public class CountryController {
         return ResponseEntity.ok(countryService.getAllCountries(PageRequest.of(page, size)));
     }
 
-    @PostMapping("/{countryId}/load-logo")
+    @PostMapping("/{id}/upload")
     @Operation(summary = "Upload logo for country")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public ResponseEntity<CountryDto> loadLogo(
-            @PositiveOrZero @PathVariable Long countryId,
-            @RequestParam("flag_image") MultipartFile flagImage
-    ) {
-        //return new ResponseEntity<>(countryService.loadLogo(countryId, flagImage), HttpStatus.OK);
-        return null;
+            @RequestParam("file") MultipartFile file,
+            @PositiveOrZero @PathVariable Long id) throws Exception {
+        return ResponseEntity.ok(countryService.loadLogo(file,id));
+
     }
 
 

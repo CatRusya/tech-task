@@ -1,0 +1,28 @@
+server:
+  forward-headers-strategy: framework
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: techtask
+  datasource:
+    driver-Class-Name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: H2
+    password:
+    hikari:
+      leak-detection-threshold: 30000
+    jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      hibernate:
+        hbm2ddl.auto: create-drop
+
+security:
+  jwt:
+    token-type: JWT
+    secret-key: c2pkZmdranNscnRwZmdzZGtmZ2psc2tyanRbcGZnZGZrZ2xqZWxrcmpwb2dpcHNka2dhbHNramR0bGtqbGtqZ2xkZmdzcnRlcw==
+    refresh-token:
+      expiration: 2592000000 #30days

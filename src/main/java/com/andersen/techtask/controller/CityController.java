@@ -29,8 +29,9 @@ public class CityController {
 
     private final CityService cityService;
 
-    @Operation(summary = "Returns paginated list of all cities by country")
+
     @GetMapping
+    @Operation(summary = "Return paginated list of all cities by country")
     public ResponseEntity <CityResponse> getAllCities(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "per_page", defaultValue = "25") int size,
@@ -46,11 +47,12 @@ public class CityController {
 
     }
 
-    @Operation(summary = "Edits city name")
+
     @PatchMapping("/{id}")
+    @Operation(summary = "Edit city name")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public ResponseEntity<CityDto> editCity(@Valid @PositiveOrZero @PathVariable Long id, @Validated(OnUpdate.class) @RequestBody CityDto cityDto) {
-        return new ResponseEntity(cityService.editCityName(id, cityDto), HttpStatus.OK);
+        return ResponseEntity.ok(cityService.editCityName(id, cityDto));
     }
 
 

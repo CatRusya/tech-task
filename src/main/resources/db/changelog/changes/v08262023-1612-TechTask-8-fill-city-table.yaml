@@ -1,4 +1,10 @@
 databaseChangeLog:
+  - preConditions:
+      - or:
+          - dbms:
+              type: postgresql
+          - dbms:
+              type: h2
   - changeSet:
       id: "TechTask-8-fill-user-role-table"
       author: "Kateryna Siebova"
