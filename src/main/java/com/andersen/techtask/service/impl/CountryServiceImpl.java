@@ -18,13 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-
 public class CountryServiceImpl implements CountryService {
 
   private final CountryRepository countryRepository;
   private final ImageService imageService;
-
-
 
   @Override
   @Transactional(readOnly = true)
@@ -57,6 +54,4 @@ public class CountryServiceImpl implements CountryService {
         country.getCountryName(),
         imageService.getUrl(country.getLogo()));
   }
-
-
 }

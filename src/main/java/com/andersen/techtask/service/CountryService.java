@@ -11,5 +11,5 @@ public interface CountryService {
 
   Country getCountryById(Long id);
 
-  CountryDto loadLogo(MultipartFile file, Long id) throws Exception;
+  CountryDto loadLogo(MultipartFile file, Long id);
 }

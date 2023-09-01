@@ -10,12 +10,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/cities")
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class CityController {
       @RequestParam(value = "per_page") int size,
       @RequestParam(required = false) String cityName,
       @RequestParam(required = false) String countryName) {
-
+    log.info("Log in method 'getAllCities' in city service");
     if (countryName != null && cityName != null) {
       throw new InvalidInputException();
     }
@@ -49,6 +50,7 @@ public class CityController {
   @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
   public ResponseEntity<CityDto> editCity(@Valid @PositiveOrZero @PathVariable Long id,
       @Validated(OnUpdate.class) @RequestBody CityDto cityDto) {
+    log.info("Log in method 'editCity' in city service");
     return ResponseEntity.ok(cityService.editCityName(id, cityDto));
   }
 

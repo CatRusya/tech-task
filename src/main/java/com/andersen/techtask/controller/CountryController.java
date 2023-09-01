@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/countries")
@@ -28,7 +30,7 @@ public class CountryController {
   public ResponseEntity<Page<CountryDto>> getAllCountries(
       @RequestParam(value = "page") int page,
       @RequestParam(value = "per_page") int size) {
-
+    log.info("Log in method 'getAllCountries' in country service");
     return ResponseEntity.ok(countryService.getAllCountries(PageRequest.of(page, size)));
   }
 
@@ -38,8 +40,8 @@ public class CountryController {
   public ResponseEntity<CountryDto> loadLogo(
       @RequestParam("file") MultipartFile file,
       @PositiveOrZero @PathVariable Long id) throws Exception {
+    log.info("Log in method 'loadLogo' in country service");
     return ResponseEntity.ok(countryService.loadLogo(file, id));
-
   }
 
 

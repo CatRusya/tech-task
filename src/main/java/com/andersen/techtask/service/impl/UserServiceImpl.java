@@ -19,7 +19,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
@@ -77,6 +76,4 @@ public class UserServiceImpl implements UserService {
   public void delete(Long id) {
     userRepository.deleteById(id);
   }
-
-
 }

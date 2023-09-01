@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
-
   private final MinioClient minioClient;
   private final MinioProperties minioProperties;
 

@@ -1,6 +1,7 @@
 package com.andersen.techtask.controller;
 
 import com.andersen.techtask.exception.*;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,7 +62,7 @@ public class ControllerAdvice {
     exceptionBody.setErrors(e.getConstraintViolations().stream()
         .collect(Collectors.toMap(
             violation -> violation.getPropertyPath().toString(),
-            violation -> violation.getMessage())));
+                ConstraintViolation::getMessage)));
     return exceptionBody;
   }
 
