@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ConfigurationProperties(prefix = "minio")
 public class MinioProperties {
-    String bucket;
-    String url;
-    String accessKey;
-    String secretKey;
+  String bucket;
+  String url;
+  String accessKey;
+  String secretKey;
 }

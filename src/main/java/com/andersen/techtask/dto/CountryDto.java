@@ -1,6 +1,5 @@
 package com.andersen.techtask.dto;
 
-import com.andersen.techtask.entity.City;
 import com.andersen.techtask.validation.OnCreate;
 import com.andersen.techtask.validation.OnUpdate;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,24 +11,25 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Country DTO")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CountryDto {
+public class CountryDto implements Serializable {
 
-    @Schema(description = "Country 1", example = "1")
-    @NotNull(message = "Id must be not null", groups = OnUpdate.class)
-    Long id;
+  @Schema(description = "Country 1", example = "1")
+  @NotNull(message = "Id must be not null", groups = OnUpdate.class)
+  Long id;
 
-    @Schema(description = "Country name", example = "Turkey")
-    @NotNull(message = "Country name must be not null", groups = {OnCreate.class, OnUpdate.class})
-    @Length(max = 255, message = "Country name must be smaller than 255 symbols", groups = {OnCreate.class, OnUpdate.class})
-    String name;
+  @Schema(description = "Country name", example = "Turkey")
+  @NotNull(message = "Country name must be not null", groups = {OnCreate.class, OnUpdate.class}) @Length(max = 255, message = "Country name must be smaller than 255 symbols",
+      groups = {OnCreate.class, OnUpdate.class})
+  String name;
 
-    @Schema(example = "uuid-logo-name-with-extension.gif")
-    @Length(max = 255)
-    String logo;
+  @Schema(example = "uuid-logo-name-with-extension.gif")
+  @Length(max = 255) String logo;
 
 }

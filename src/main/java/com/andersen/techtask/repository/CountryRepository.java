@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CountryRepository extends JpaRepository<Country,Long> {
+public interface CountryRepository extends JpaRepository<Country, Long> {
 
-    @EntityGraph(attributePaths = {"cities"})
-    Page<Country> findAll(@NotNull Pageable pageable);
+  @EntityGraph(attributePaths = {"cities"})
+  Page<Country> findAll(@NotNull Pageable pageable);
 }

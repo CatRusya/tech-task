@@ -1,4 +1,4 @@
-drop table if exists users_roles cascade;
+drop table if exists user_role cascade;
 drop table if exists city cascade;
 drop table if exists country cascade;
 drop table if exists users cascade;
@@ -27,11 +27,12 @@ create table city
     constraint fk_city_country foreign key (country_id) references country(id) on delete cascade on update no action
 );
 
-create table users_roles
+create table user_role
 (
     user_id bigint       not null,
     role    varchar(255) not null,
     primary key (user_id, role),
-    constraint fk_users_roles_users foreign key (user_id) references users(id) on delete cascade on update no action
+    constraint fk_users_role_users foreign key (user_id) references users(id) on delete cascade on update no action
 );
+
 

@@ -1,12 +1,10 @@
 package com.andersen.techtask.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Table(name = "country")
 @Entity(name = "country")
@@ -17,20 +15,20 @@ import java.util.Objects;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Country implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  Long id;
 
-    @Column(name = "country_name")
-    String countryName;
+  @Column(name = "country_name")
+  String countryName;
 
-    @Column(name = "logo")
-    @CollectionTable(name= "country_logo")
-    String logo;
+  @Column(name = "logo")
+  @CollectionTable(name = "country_logo")
+  String logo;
 
-    @OneToMany(mappedBy = "country", cascade = {
-            CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<City> cities;
+  @OneToMany(mappedBy = "country", cascade = {
+      CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  private List<City> cities;
 
 }

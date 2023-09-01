@@ -1,13 +1,11 @@
 package com.andersen.techtask.entity;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import java.io.Serializable;
-import java.util.Objects;
 
 
 @Entity
@@ -18,17 +16,17 @@ import java.util.Objects;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class City implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  Long id;
 
-    @Column(name = "city_name")
-    String cityName;
+  @Column(name = "city_name")
+  String cityName;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", referencedColumnName = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    Country country;
+  @ManyToOne
+  @JoinColumn(name = "country_id", referencedColumnName = "id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  Country country;
 
 }

@@ -7,9 +7,7 @@ import com.andersen.techtask.service.CountryService;
 import com.andersen.techtask.service.ImageService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,46 +21,42 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class CountryServiceImpl implements CountryService {
 
-    private final CountryRepository countryRepository;
-    private final ImageService imageService;
+  private final CountryRepository countryRepository;
+  private final ImageService imageService;
 
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<CountryDto> getAllCountries(Pageable pageable) {
-        Page<Country> pageCountries = countryRepository.findAll(pageable);
-        return pageCountries.map(this::countryToDto);
-    }
 
-    @Override
-    @Transactional(readOnly = true)
-    @Cacheable(value = "CountryService::getById", key = "#id")
-    public Country getCountryById(Long id) {
-        return countryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Country not found"));
-    }
+  @Override
+  @Transactional(readOnly = true)
+  public Page<CountryDto> getAllCountries(Pageable pageable) {
+    Page<Country> pageCountries = countryRepository.findAll(pageable);
+    return pageCountries.map(this::countryToDto);
+  }
 
-    @Override
-    @Transactional
-//    @Caching(put = {
-//            @CachePut(value = "CountryService::getById", key = "#country.id"),
-//    })
-    public CountryDto loadLogo(MultipartFile file, Long id) throws Exception {
-        Country country = getCountryById(id);
-        System.out.println(country);
-        String fullFilePath = imageService.loadLogoFile(file);
-        System.out.println(fullFilePath);
-        country.setLogo(fullFilePath);
-        countryRepository.save(country);
-        return new CountryDto(country.getId(), country.getCountryName(), country.getLogo());
-    }
+  @Override
+  @Transactional(readOnly = true)
+  @Cacheable(value = "CountryService::getById", key = "#id")
+  public Country getCountryById(Long id) {
+    return countryRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Country not found"));
+  }
 
-    private CountryDto countryToDto(Country country) {
-        return new CountryDto(
-                country.getId(),
-                country.getCountryName(),
-                country.getLogo());
-    }
+  @Override
+  @Transactional
+  public CountryDto loadLogo(MultipartFile file, Long id) {
+    Country country = getCountryById(id);
+    String fullFilePath = imageService.loadLogoFile(file);
+    country.setLogo(fullFilePath);
+    countryRepository.save(country);
+    return new CountryDto(country.getId(), country.getCountryName(), country.getLogo());
+  }
+
+  private CountryDto countryToDto(Country country) {
+    return new CountryDto(
+        country.getId(),
+        country.getCountryName(),
+        imageService.getUrl(country.getLogo()));
+  }
 
 
 }

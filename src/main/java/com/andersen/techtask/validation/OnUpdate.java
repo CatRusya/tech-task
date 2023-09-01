@@ -1,4 +1,3 @@
 package com.andersen.techtask.validation;
 
-public interface OnUpdate {
-}
+public interface OnUpdate {}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.andersen</groupId>
@@ -27,7 +27,6 @@
 		<liquibase.version>4.23.1</liquibase.version>
 		<springdoc.version>2.2.0</springdoc.version>
 		<minio.version>8.5.5</minio.version>
-		<commons-io.version>2.13.0</commons-io.version>
 	</properties>
 
 	<dependencies>
@@ -142,13 +141,6 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
